@@ -19,8 +19,11 @@ namespace Gaming {
         ~Food();
 
         PieceType getType() const override { return PieceType::FOOD; }
+        char getTypeID() const override { return FOOD_ID;}
+        int getID() const override { return __id;}
 
         void print(std::ostream &os) const override;
+        double consume();
     };
 
 }

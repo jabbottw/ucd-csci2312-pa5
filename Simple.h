@@ -19,6 +19,8 @@ namespace Gaming {
         ~Simple();
 
         PieceType getType() const override { return PieceType::SIMPLE; }
+        char getTypeID() const override { return SIMPLE_ID;}
+        int getID() const override { return __id;}
 
         void print(std::ostream &os) const override;
 
