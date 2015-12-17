@@ -37,6 +37,11 @@ namespace Gaming {
 
     Piece &Resource::operator*(Piece &other)
     {
+        Piece * p = &other;
+        if (other.getType() == FOOD or other.getType() == ADVANTAGE){
+            Resource *r = dynamic_cast<Resource*>(p);
+            return this->interact(r);
+        }
         return other;
     }
 

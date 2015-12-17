@@ -580,6 +580,8 @@ void test_piece_interaction(ErrorContext &ec, unsigned int numRuns) {
             Piece *pieces[2] = { &s0, &s1 };
             Piece &p0 = *pieces[0], &p1 = *pieces[1];
             p1 * p0;
+            bool t = p0.isViable();
+            bool t2 = p1.isViable();
             pass = (! p0.isViable()) && (! p1.isViable());
 
             ec.result(pass);
