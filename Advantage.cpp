@@ -32,4 +32,11 @@ namespace Gaming {
     double Advantage::consume() {
         return 0;
     }
+
+
+    std::ostream &operator<<(std::ostream &os, const Advantage &a){
+        os << a.getTypeID() << a.getID();
+        return os;
+    }
+
 }

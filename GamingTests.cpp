@@ -59,59 +59,59 @@ void test_piece_smoketest(ErrorContext &ec) {
     ec.result(pass);
 }
 //
-//void test_piece_print(ErrorContext &ec, unsigned int numRuns) {
-//    bool pass;
-//
-//    // Run at least once!!
-//    assert(numRuns > 0);
-//
-//    ec.DESC("--- Test - Piece - Id-s, names, printing ---");
-//
-//    for (int run = 0; run < numRuns; run ++) {
-//
-//        ec.DESC("piece id-s, names, and printing");
-//
-//        {
-//            Game g;                         // note: Game smoke test is needed first
-//
-//            Position p0(0, 0);
-//            Simple s(g, p0, 10);
-//
-//            Position p1(1, 0);
-//            Strategic t(g, p1, 20);
-//
-//            Position p2(2, 2);
-//            Food f(g, p2, 5);
-//
-//            Position p3(0, 2);
-//            Advantage a(g, p3, 3);
-//
-//            std::stringstream ss;
-//            ss << s << ' ' << t << ' ' << f << ' ' << a;
-//
-//            int id = 0;
-//            std::regex re("S[[:d:]]{1,}[ ]"); // ECMAScript, by default
-//            std::smatch m;
-//            std::regex_search(ss.str(), m, re);
-//            if (m.size() != 1) { // parse problem
-//                pass = false;
-//            } else {
-//                std::string matchStr(m[0]);
-//                std::regex r("[[:d:]]{1,}");
-//                std::regex_search(matchStr, m, r);
-//                id = stoi(m[0]);
-//                pass = true;
-//            }
-//
-//            std::stringstream compare;
-//            compare << 'S' << id << " T" << (id+1) << " F" << (id+2) << " D" << (id+3);
-//
-//            pass = pass && (ss.str() == compare.str());
-//
-//            ec.result(pass);
-//        }
-//    }
-//}
+void test_piece_print(ErrorContext &ec, unsigned int numRuns) {
+    bool pass;
+
+    // Run at least once!!
+    assert(numRuns > 0);
+
+    ec.DESC("--- Test - Piece - Id-s, names, printing ---");
+
+    for (int run = 0; run < numRuns; run ++) {
+
+        ec.DESC("piece id-s, names, and printing");
+
+        {
+            Game g;                         // note: Game smoke test is needed first
+
+            Position p0(0, 0);
+            Simple s(g, p0, 10);
+
+            Position p1(1, 0);
+            Strategic t(g, p1, 20);
+
+            Position p2(2, 2);
+            Food f(g, p2, 5);
+
+            Position p3(0, 2);
+            Advantage a(g, p3, 3);
+
+            std::stringstream ss;
+            ss << s << ' ' << t << ' ' << f << ' ' << a;
+
+            int id = 0;
+            std::regex re("S[[:d:]]{1,}[ ]"); // ECMAScript, by default
+            std::smatch m;
+            std::regex_search(ss.str(), m, re);
+            if (m.size() != 1) { // parse problem
+                pass = false;
+            } else {
+                std::string matchStr(m[0]);
+                std::regex r("[[:d:]]{1,}");
+                std::regex_search(matchStr, m, r);
+                id = stoi(m[0]);
+                pass = true;
+            }
+
+            std::stringstream compare;
+            compare << 'S' << id << " T" << (id+1) << " F" << (id+2) << " D" << (id+3);
+
+            pass = pass && (ss.str() == compare.str());
+
+            ec.result(pass);
+        }
+    }
+}
 //
 //// Piece aging and viability
 //void test_piece_aging(ErrorContext &ec, unsigned int numRuns) {

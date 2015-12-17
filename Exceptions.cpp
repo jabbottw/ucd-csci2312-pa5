@@ -31,10 +31,7 @@ namespace Gaming {
 
     OutOfBoundsEx::OutOfBoundsEx(unsigned maxWidth, unsigned maxHeight,
                                  unsigned width, unsigned height) :
-            DimensionEx(Game::MIN_WIDTH,
-                        Game::MIN_HEIGHT,
-                        Game::MIN_WIDTH,
-                        Game::MIN_HEIGHT) {
+            DimensionEx(maxWidth, maxHeight, width, height) {
         __name = "OutOfBoundsEx";
     }
 

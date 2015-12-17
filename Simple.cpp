@@ -31,5 +31,9 @@ namespace Gaming {
         return action;
     }
 
+    std::ostream &operator<<(std::ostream &os, const Simple &s){
+        os << s.getTypeID() << s.getID();
+        return os;
+    }
 
 }

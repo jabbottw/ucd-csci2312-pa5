@@ -43,7 +43,9 @@ namespace Gaming {
             __height = height;
             __verbose = manual;
             __round = 0;
-            populate();
+            if (!manual){
+                populate();
+            }
         }
     }
 
@@ -57,6 +59,13 @@ namespace Gaming {
     Game::~Game(){
 
     }
+
+    // X = Rows, Y = Columns
+    int xyToGridIndex(int x, int y, int m){
+        int i = (x*m) + y;
+        return i;
+    }
+
 
     void Game::populate() {
         __numInitAgents = (__width * __height) / NUM_INIT_AGENT_FACTOR;
@@ -74,8 +83,8 @@ namespace Gaming {
         while (numStrategic > 0) {
             int i = d(gen); // random index in the grid vector
             if (__grid[i] == nullptr) { // is position empty
-                Position pos(i / __width, i % __width);
-                __grid[i] = new Strategic(*this, pos, Game::STARTING_AGENT_ENERGY);
+                Position position(i / __width, i % __width);
+                __grid[i] = new Strategic(*this, position, Game::STARTING_AGENT_ENERGY);
                 numStrategic--;
             }
         }
@@ -84,8 +93,8 @@ namespace Gaming {
         while (numSimple > 0) {
             int i = d(gen); // random index in the grid vector
             if (__grid[i] == nullptr) { // is position empty
-                Position pos(i / __width, i % __width);
-                __grid[i] = new Simple(*this, pos, Game::STARTING_AGENT_ENERGY);
+                Position position(i / __width, i % __width);
+                __grid[i] = new Simple(*this, position, Game::STARTING_AGENT_ENERGY);
                 numSimple--;
             }
         }
@@ -94,8 +103,8 @@ namespace Gaming {
         while (numAdvantages > 0) {
             int i = d(gen); // random index in the grid vector
             if (__grid[i] == nullptr) { // is position empty
-                Position pos(i / __width, i % __width);
-                __grid[i] = new Advantage(*this, pos, Game::STARTING_RESOURCE_CAPACITY);
+                Position position(i / __width, i % __width);
+                __grid[i] = new Advantage(*this, position, Game::STARTING_RESOURCE_CAPACITY);
                 numAdvantages--;
             }
         }
@@ -104,52 +113,172 @@ namespace Gaming {
         while (numFoods > 0) {
             int i = d(gen); // random index in the grid vector
             if (__grid[i] == nullptr) { // is position empty
-                Position pos(i / __width, i % __width);
-                __grid[i] = new Food(*this, pos, Game::STARTING_AGENT_ENERGY);
+                Position position(i / __width, i % __width);
+                __grid[i] = new Food(*this, position, Game::STARTING_AGENT_ENERGY);
                 numFoods--;
             }
         }
     }
 
-    unsigned int Game::getNumPieces() const { return 0; }
-    unsigned int Game::getNumAgents() const { return 0; }
-    unsigned int Game::getNumSimple() const { return 0; }
-    unsigned int Game::getNumStrategic() const { return 0; }
-    unsigned int Game::getNumResources() { return 0; }
+    unsigned int Game::getNumPieces() const {
+        int count = 0;
+        for (int i = 0; i < this->__grid.size(); i++)    {
+            if (__grid[i] != nullptr){
+                count++;
+            }
+        }
+        return count;
+    }
+    unsigned int Game::getNumAgents() const {
+        int count = 0;
+        for (int i = 0; i < this->__grid.size(); i++)    {
+            if (__grid[i] != nullptr){
+                if (__grid[i]->getTypeID() == 'S' or __grid[i]->getTypeID() == 'T') {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    unsigned int Game::getNumSimple() const {
+        int count = 0;
+        for (int i = 0; i < this->__grid.size(); i++) {
+            if (__grid[i] != nullptr) {
+                if (__grid[i]->getTypeID() == 'S') {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    unsigned int Game::getNumStrategic() const {
+        int count = 0;
+        for (int i = 0; i < this->__grid.size(); i++) {
+            if (__grid[i] != nullptr) {
+                if (__grid[i]->getTypeID() == 'T') {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    unsigned int Game::getNumResources() {
+        int count = 0;
+        for (int i = 0; i < this->__grid.size(); i++)    {
+            if (__grid[i] != nullptr){
+                if (__grid[i]->getTypeID() == 'F' or __grid[i]->getTypeID() == 'D') {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 
 
     bool Game::addSimple(const Position &position){
-        return false;
+        int i = xyToGridIndex(position.x, position.y, this->__width);
+        if (__grid[i] == nullptr) {
+            __grid[i] = new Simple(*this, position, Game::STARTING_AGENT_ENERGY);
+            return true;
+        } else {
+            return false;
+        }
     }
     bool Game::addSimple(unsigned x, unsigned y) {
-        return true;
+        int i = xyToGridIndex(x, y, this->__width);
+        if (__grid[i] == nullptr) {
+            Position position(x, y);
+            __grid[i] = new Simple(*this, position, Game::STARTING_AGENT_ENERGY);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     bool Game::addStrategic(const Position &position, Strategy *s){
-        return false;
+        if (position.x > MIN_HEIGHT or position.y > Game::MIN_WIDTH) {
+            throw OutOfBoundsEx(Game::MIN_WIDTH, Game::MIN_HEIGHT, position.y, position.x);
+        } else {
+            int i = xyToGridIndex(position.x, position.y, this->__width);
+            if (__grid[i] == nullptr) {
+                __grid[i] = new Strategic(*this, position, Game::STARTING_AGENT_ENERGY, s);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+
     bool Game::addStrategic(unsigned x, unsigned y, Strategy *s ){
+        if (x > MIN_HEIGHT or y > Game::MIN_WIDTH) {
+            throw OutOfBoundsEx(Game::MIN_WIDTH, Game::MIN_HEIGHT, y, x);
+        } else {
+            int i = xyToGridIndex(x, y, this->__width);
+            if (__grid[i] == nullptr) {
+                Position position(x, y);
+                __grid[i] = new Strategic(*this, position, Game::STARTING_AGENT_ENERGY, s);
+                return true;
+            } else {
+                return false;
+            }
+        }
         return false;
     }
     bool Game::addFood(const Position &position){
-        return false;
+        int i = xyToGridIndex(position.x, position.y, this->__width);
+        if (__grid[i] == nullptr) {
+            __grid[i] = new Food(*this, position, Game::STARTING_AGENT_ENERGY);
+            return true;
+        } else {
+            return false;
+        }
     }
+
     bool Game::addFood(unsigned x, unsigned y){
-        return false;
+        int i = xyToGridIndex(x, y, this->__width);
+        if (__grid[i] == nullptr) {
+            Position position(x, y);
+            __grid[i] = new Food(*this, position, Game::STARTING_AGENT_ENERGY);
+            return true;
+        } else {
+            return false;
+        }
     }
+
     bool Game::addAdvantage(const Position &position){
-        return false;
+        int i = xyToGridIndex(position.x, position.y, this->__width);
+        if (position.x > MIN_HEIGHT or position.y > Game::MIN_WIDTH) {
+            throw OutOfBoundsEx(Game::MIN_WIDTH, Game::MIN_HEIGHT, position.y, position.x);
+        } else {
+            if (__grid[i] == nullptr) {
+                __grid[i] = new Advantage(*this, position, Game::STARTING_RESOURCE_CAPACITY);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+
     bool Game::addAdvantage(unsigned x, unsigned y){
-        return false;
+        if (x > MIN_HEIGHT or y > Game::MIN_WIDTH) {
+            throw OutOfBoundsEx(Game::MIN_WIDTH, Game::MIN_HEIGHT, y, x);
+        } else {
+            int i = xyToGridIndex(x, y, this->__width);
+            if (__grid[i] == nullptr) {
+                Position position(x, y);
+                __grid[i] = new Advantage(*this, position, Game::STARTING_RESOURCE_CAPACITY);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+
     const Surroundings Game::getSurroundings(const Position &pos) const{
         Surroundings s;
         return s;
-    }
-
-    int positionToGrid(int i, int j){
-        return (i+1) * (j+1);
     }
 
     // Print as follows the state of the game after the last round:

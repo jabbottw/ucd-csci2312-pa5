@@ -25,5 +25,9 @@ namespace Gaming {
         return 0;
     }
 
+    std::ostream &operator<<(std::ostream &os, const Food &f){
+        os << f.getTypeID() << f.getID();
+        return os;
+    }
 
 }

@@ -30,7 +30,7 @@ int main() {
 
     // piece tests
     test_piece_smoketest(ec);
-//    test_piece_print(ec, NumIters);
+    test_piece_print(ec, NumIters);
 //    test_piece_aging(ec, NumIters);
 //    test_piece_energy(ec, NumIters);
 //    test_piece_turntaking(ec, NumIters);
@@ -45,7 +45,7 @@ int main() {
     // game tests
     test_game_smoketest(ec);
 
-    //test_game_populate(ec, NumIters);
+    test_game_populate(ec, NumIters);
     test_game_print(ec, NumIters);
 //    test_game_play(ec, NumIters);
 
