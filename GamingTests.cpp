@@ -114,77 +114,77 @@ void test_piece_print(ErrorContext &ec, unsigned int numRuns) {
 }
 //
 //// Piece aging and viability
-//void test_piece_aging(ErrorContext &ec, unsigned int numRuns) {
-//    bool pass;
-//
-//    // Run at least once!!
-//    assert(numRuns > 0);
-//
-//    ec.DESC("--- Test - Piece - Viability & aging ---");
-//
-//    for (int run = 0; run < numRuns; run++) {
-//
-//        ec.DESC("app pieces start out viable");
-//
-//        {
-//            Game g;                         // note: Game smoke test is needed first
-//
-//            Position p0(0, 0);
-//            Simple s(g, p0, 10);
-//
-//            Position p1(1, 0);
-//            Strategic t(g, p1, 20);
-//
-//            Position p2(2, 2);
-//            Food f(g, p2, 5);
-//
-//            Position p3(0, 2);
-//            Advantage a(g, p3, 3);
-//
-//            pass = s.isViable() &&
-//                   t.isViable() &&
-//                   f.isViable() &&
-//                   a.isViable();
-//
-//            ec.result(pass);
-//        }
-//
-//        ec.DESC("pieces age polymorphically (with every round)");
-//
-//        {
-//            Game g;                         // note: Game smoke test is needed first
-//
-//            Position p0(0, 0);
-//            Simple s(g, p0, 10);
-//
-//            Position p1(1, 0);
-//            Strategic t(g, p1, 20);
-//
-//            Position p2(2, 2);
-//            Food f(g, p2, 5);
-//
-//            Position p3(0, 2);
-//            Advantage a(g, p3, 3);
-//
-//            Piece *pieces[] = { &s, &t, &f, &a };
-//
-//            pass = true;
-//            for (int i = 0; i < 4; i++) {
-//                pass = pass && pieces[i]->isViable();
-//                for (int a = 0; a < 100; a++) pieces[i]->age();
-//                pass = pass && (! pieces[i]->isViable());
-//            }
-//
-//            ec.result(pass);
-//        }
-//
-//
-//
-//        // TODO test fatigue factor, spoil rate
-//
-//
-//    }
-//}
+void test_piece_aging(ErrorContext &ec, unsigned int numRuns) {
+    bool pass;
+
+    // Run at least once!!
+    assert(numRuns > 0);
+
+    ec.DESC("--- Test - Piece - Viability & aging ---");
+
+    for (int run = 0; run < numRuns; run++) {
+
+        ec.DESC("app pieces start out viable");
+
+        {
+            Game g;                         // note: Game smoke test is needed first
+
+            Position p0(0, 0);
+            Simple s(g, p0, 10);
+
+            Position p1(1, 0);
+            Strategic t(g, p1, 20);
+
+            Position p2(2, 2);
+            Food f(g, p2, 5);
+
+            Position p3(0, 2);
+            Advantage a(g, p3, 3);
+
+            pass = s.isViable() &&
+                   t.isViable() &&
+                   f.isViable() &&
+                   a.isViable();
+
+            ec.result(pass);
+        }
+
+        ec.DESC("pieces age polymorphically (with every round)");
+
+        {
+            Game g;                         // note: Game smoke test is needed first
+
+            Position p0(0, 0);
+            Simple s(g, p0, 10);
+
+            Position p1(1, 0);
+            Strategic t(g, p1, 20);
+
+            Position p2(2, 2);
+            Food f(g, p2, 5);
+
+            Position p3(0, 2);
+            Advantage a(g, p3, 3);
+
+            Piece *pieces[] = { &s, &t, &f, &a };
+
+            pass = true;
+            for (int i = 0; i < 4; i++) {
+                pass = pass && pieces[i]->isViable();
+                for (int a = 0; a < 100; a++) pieces[i]->age();
+                pass = pass && (! pieces[i]->isViable());
+            }
+
+            ec.result(pass);
+        }
+
+
+
+        // TODO test fatigue factor, spoil rate
+
+
+    }
+}
 //
 //// Piece energy/capacity
 //void test_piece_energy(ErrorContext &ec, unsigned int numRuns) {
@@ -762,125 +762,125 @@ void test_surroundings_smoketest(ErrorContext &ec) {
 //// - - - - - - - - - - A C T I O N - - - - - - - - - -
 //
 //// Action smoke test
-//void test_action_smoketest(ErrorContext &ec) {
-//    bool pass;
-//
-//    ec.DESC("--- Test - Action - Smoketest ---");
-//
-//    ec.DESC("printing ActionType");
-//
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        std::stringstream ss;
-//        ss << ActionType::N << ' '
-//        << ActionType::NE << ' '
-//        << ActionType::NW << ' '
-//        << ActionType::E << ' '
-//        << ActionType::W << ' '
-//        << ActionType::SE << ' '
-//        << ActionType::SW << ' '
-//        << ActionType::S << ' '
-//        << ActionType::STAY;
-//
-//        pass = (ss.str() == "0 1 2 3 4 5 6 7 8");
-////        if (! pass) std::cout << ss.str() << std::endl;
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("3x3, manual, agent in the middle");
-//
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        Game g;
-//
-//        // not actually necessary for the test
-//        g.addSimple(1, 1); Position pos(1, 1);
-//
-//        pass = g.isLegal(ActionType::N, pos) &&
-//                g.isLegal(ActionType::NE, pos) &&
-//                g.isLegal(ActionType::NW, pos) &&
-//                g.isLegal(ActionType::E, pos) &&
-//                g.isLegal(ActionType::W, pos) &&
-//                g.isLegal(ActionType::SE, pos) &&
-//                g.isLegal(ActionType::SW, pos) &&
-//                g.isLegal(ActionType::S, pos) &&
-//                g.isLegal(ActionType::STAY, pos);
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("7x6, manual, agent in the SW corner");
-//
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        Game g(7, 6);
-//
-//        // not actually necessary for the test
-//        g.addSimple(5, 6); Position pos(5, 6);
-//
-//        pass = g.isLegal(ActionType::N, pos) &&
-//               (! g.isLegal(ActionType::NE, pos)) &&
-//               g.isLegal(ActionType::NW, pos) &&
-//               (! g.isLegal(ActionType::E, pos)) &&
-//               g.isLegal(ActionType::W, pos) &&
-//               (! g.isLegal(ActionType::SE, pos)) &&
-//               (! g.isLegal(ActionType::SW, pos)) &&
-//               (! g.isLegal(ActionType::S, pos)) &&
-//               g.isLegal(ActionType::STAY, pos);
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("7x6, movement from position to position");
-//
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        Game g(13, 9); // width - y, height - x
-//
-//        g.addSimple(0, 12); Position ne(0, 12);
-//
-//        Position p0 = (g.isLegal(ActionType::NE, ne)) ?
-//                      g.move(ne, ActionType::NE) : ne;
-//
-//        pass = (p0.x == ne.x) && (p0.y == ne.y);
-//
-//        p0 = (g.isLegal(ActionType::S, ne)) ?
-//             g.move(ne, ActionType::S) : ne;
-//
-//        pass = pass && (p0.x == ne.x+1) && (p0.y == ne.y);
-//
-//        p0 = (g.isLegal(ActionType::W, ne)) ?
-//             g.move(ne, ActionType::W) : ne;
-//
-//        pass = pass && (p0.x == ne.x) && (p0.y == ne.y-1);
-//
-//        p0 = (g.isLegal(ActionType::SE, ne)) ?
-//             g.move(ne, ActionType::SE) : ne;
-//
-//        pass = pass && (p0.x == ne.x) && (p0.y == ne.y);
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("7x6, action needed to reach one position from another");
-//
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//
-//        Game g(5, 5);
-//
-//        g.addSimple(1, 1); Position simpos(1, 1);
-//        g.addFood(1, 2); Position foodpos(1, 2);
-//
-//        pass = (Game::reachSurroundings(simpos, foodpos) == ActionType::E);
-//
-//        g.addAdvantage(0, 1); Position adpos(0, 1);
-//
-//        pass = pass && (Game::reachSurroundings(simpos, adpos) == ActionType::N);
-//
-//        Position newpos(2, 0);
-//
-//        pass = pass && (Game::reachSurroundings(simpos, newpos) == ActionType::SW);
-//    }
-//    ec.result(pass);
-//}
+void test_action_smoketest(ErrorContext &ec) {
+    bool pass;
+
+    ec.DESC("--- Test - Action - Smoketest ---");
+
+    ec.DESC("printing ActionType");
+
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        std::stringstream ss;
+        ss << ActionType::N << ' '
+        << ActionType::NE << ' '
+        << ActionType::NW << ' '
+        << ActionType::E << ' '
+        << ActionType::W << ' '
+        << ActionType::SE << ' '
+        << ActionType::SW << ' '
+        << ActionType::S << ' '
+        << ActionType::STAY;
+
+        pass = (ss.str() == "0 1 2 3 4 5 6 7 8");
+//        if (! pass) std::cout << ss.str() << std::endl;
+    }
+    ec.result(pass);
+
+    ec.DESC("3x3, manual, agent in the middle");
+
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        Game g;
+
+        // not actually necessary for the test
+        g.addSimple(1, 1); Position pos(1, 1);
+
+        pass = g.isLegal(ActionType::N, pos) &&
+                g.isLegal(ActionType::NE, pos) &&
+                g.isLegal(ActionType::NW, pos) &&
+                g.isLegal(ActionType::E, pos) &&
+                g.isLegal(ActionType::W, pos) &&
+                g.isLegal(ActionType::SE, pos) &&
+                g.isLegal(ActionType::SW, pos) &&
+                g.isLegal(ActionType::S, pos) &&
+                g.isLegal(ActionType::STAY, pos);
+    }
+    ec.result(pass);
+
+    ec.DESC("7x6, manual, agent in the SW corner");
+
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        Game g(7, 6);
+
+        // not actually necessary for the test
+        g.addSimple(5, 6); Position pos(5, 6);
+
+        pass = g.isLegal(ActionType::N, pos) &&
+               (! g.isLegal(ActionType::NE, pos)) &&
+               g.isLegal(ActionType::NW, pos) &&
+               (! g.isLegal(ActionType::E, pos)) &&
+               g.isLegal(ActionType::W, pos) &&
+               (! g.isLegal(ActionType::SE, pos)) &&
+               (! g.isLegal(ActionType::SW, pos)) &&
+               (! g.isLegal(ActionType::S, pos)) &&
+               g.isLegal(ActionType::STAY, pos);
+    }
+    ec.result(pass);
+
+    ec.DESC("7x6, movement from position to position");
+
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        Game g(13, 9); // width - y, height - x
+
+        g.addSimple(0, 12); Position ne(0, 12);
+
+        Position p0 = (g.isLegal(ActionType::NE, ne)) ?
+                      g.move(ne, ActionType::NE) : ne;
+
+        pass = (p0.x == ne.x) && (p0.y == ne.y);
+
+        p0 = (g.isLegal(ActionType::S, ne)) ?
+             g.move(ne, ActionType::S) : ne;
+
+        pass = pass && (p0.x == ne.x+1) && (p0.y == ne.y);
+
+        p0 = (g.isLegal(ActionType::W, ne)) ?
+             g.move(ne, ActionType::W) : ne;
+
+        pass = pass && (p0.x == ne.x) && (p0.y == ne.y-1);
+
+        p0 = (g.isLegal(ActionType::SE, ne)) ?
+             g.move(ne, ActionType::SE) : ne;
+
+        pass = pass && (p0.x == ne.x) && (p0.y == ne.y);
+    }
+    ec.result(pass);
+
+    ec.DESC("7x6, action needed to reach one position from another");
+
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+
+        Game g(5, 5);
+
+        g.addSimple(1, 1); Position simpos(1, 1);
+        g.addFood(1, 2); Position foodpos(1, 2);
+
+        pass = (Game::reachSurroundings(simpos, foodpos) == ActionType::E);
+
+        g.addAdvantage(0, 1); Position adpos(0, 1);
+
+        pass = pass && (Game::reachSurroundings(simpos, adpos) == ActionType::N);
+
+        Position newpos(2, 0);
+
+        pass = pass && (Game::reachSurroundings(simpos, newpos) == ActionType::SW);
+    }
+    ec.result(pass);
+}
 //
 //
 //// - - - - - - - - - - G A M E - - - - - - - - - -

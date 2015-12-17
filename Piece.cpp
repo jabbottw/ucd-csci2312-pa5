@@ -12,7 +12,8 @@ namespace Gaming {
 
     Piece::Piece(const Game &g, const Position &p) :
             __game(g),
-            __id(__idGen++)
+            __id(__idGen++),
+            __finished(false)
     {}
 
 

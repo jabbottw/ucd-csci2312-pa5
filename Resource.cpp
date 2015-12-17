@@ -8,6 +8,8 @@
 
 namespace Gaming {
 
+    const double Resource::RESOURCE_SPOIL_FACTOR = 1.2;
+
     Resource::Resource(const Game &g, const Position &p, double __capacity) :
             Piece::Piece(g,p),
             __capacity(__capacity)
@@ -18,7 +20,7 @@ namespace Gaming {
     }
 
     void Resource::age() {
-
+        __capacity /= Resource::RESOURCE_SPOIL_FACTOR;
     }
 
     double Resource::consume(){

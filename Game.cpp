@@ -73,6 +73,14 @@ namespace Gaming {
         return i;
     }
 
+    bool cellAccessible(int x, int y, const Game &g){
+        if (x >= g.getWidth() or x < 0 or y >= g.getHeight() or y < 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     void Game::populate() {
         __numInitAgents = (__width * __height) / NUM_INIT_AGENT_FACTOR;
@@ -355,6 +363,51 @@ namespace Gaming {
         }
         os << std::endl << "Status:";
         return os;
+    }
+
+    const ActionType Game::reachSurroundings(const Position &from, const Position &to){
+        return ActionType::N;
+    }
+
+
+    bool Game::isLegal(const ActionType &ac, const Position &pos) const{
+        switch (ac){
+            case ActionType::N :
+                return cellAccessible(pos.x - 1, pos.y, *this);
+            case ActionType::NE :
+                return cellAccessible(pos.x - 1, pos.y + 1, *this);
+            case ActionType::NW :
+                return cellAccessible(pos.x - 1, pos.y - 1, *this);
+            case ActionType::W :
+                return cellAccessible(pos.x, pos.y -1, *this);
+            case ActionType::STAY :
+                return cellAccessible(pos.x, pos.y, *this);
+            case ActionType::E :
+                return cellAccessible(pos.x, pos.y + 1, *this);
+            case ActionType::SW :
+                return cellAccessible(pos.x + 1, pos.y + 1, *this);
+            case ActionType::SE :
+                return cellAccessible(pos.x + 1, pos.y - 1, *this);
+            case ActionType::S :
+                return cellAccessible(pos.x + 1, pos.y, *this);
+            default:
+                return false;
+        }
+    }
+
+    // note: assumes legal, use with isLegal()
+    const Position Game::move(const Position &pos, const ActionType &ac) const{
+        return pos;
+    }
+
+    // play a single round
+    void Game::round(){
+
+    }
+
+    // play game until over
+    void Game::play(bool verbose){
+
     }
 
 }

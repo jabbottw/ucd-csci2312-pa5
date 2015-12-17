@@ -36,6 +36,6 @@ namespace Gaming {
     }
 
     void Agent::age(){
-
+        __energy -= Agent::AGENT_FATIGUE_RATE;
     }
 }
