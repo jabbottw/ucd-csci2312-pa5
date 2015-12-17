@@ -32,9 +32,9 @@ int main() {
     test_piece_smoketest(ec);
     test_piece_print(ec, NumIters);
     test_piece_aging(ec, NumIters);
-//    test_piece_energy(ec, NumIters);
-//    test_piece_turntaking(ec, NumIters);
-//    test_piece_interaction(ec, NumIters);
+    test_piece_energy(ec, NumIters);
+    test_piece_turntaking(ec, NumIters);
+    test_piece_interaction(ec, NumIters);
 
     // surroundings tests
     test_surroundings_smoketest(ec);
@@ -47,7 +47,7 @@ int main() {
 
     test_game_populate(ec, NumIters);
     test_game_print(ec, NumIters);
-//    test_game_play(ec, NumIters);
+    test_game_play(ec, NumIters);
 
     return 0;
 }

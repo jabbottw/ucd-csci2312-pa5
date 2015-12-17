@@ -21,6 +21,9 @@ namespace Gaming {
 
     void Resource::age() {
         __capacity /= Resource::RESOURCE_SPOIL_FACTOR;
+        if (__capacity < 0.0001){
+            __capacity = 0;
+        }
     }
 
     double Resource::consume(){
