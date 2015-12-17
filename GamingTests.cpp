@@ -640,123 +640,123 @@ void test_piece_print(ErrorContext &ec, unsigned int numRuns) {
 //// - - - - - - - - - - S U R R O U N D I N G S - - - - - - - - - -
 //
 //// Surroundings (vector of enums of type PieceType) smoke test
-//void test_surroundings_smoketest(ErrorContext &ec) {
-//    bool pass;
-//
-//    ec.DESC("--- Test - Surroundings - Smoketest ---");
-//
-//    ec.DESC("printing PieceTypes");
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        std::stringstream ss;
-//        ss << PieceType::SIMPLE << ' '
-//        << PieceType::STRATEGIC << ' '
-//        << PieceType::FOOD << ' '
-//        << PieceType::ADVANTAGE << ' '
-//        << PieceType::INACCESSIBLE << ' '
-//        << PieceType::SELF << ' '
-//        << PieceType::EMPTY;
-//
-//        pass = (ss.str() == "0 1 2 3 4 5 6");
-////        if (! pass) std::cout << ss.str() << std::endl;
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("3x3 grid, manual, surroundings of agents");
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        Game g;                     // note: Game smoke test required first
-//
-//        Position p0(0, 0);
-//        g.addSimple(p0);
-//
-//        Position p1(1, 0);
-//        g.addStrategic(p1);
-//
-//        Position p2(2, 2);
-//        g.addFood(p2);
-//
-//        Position p3(0, 2);
-//        g.addAdvantage(p3);
-//
-//        // The surroundings of the simple agent
-//        Surroundings surr = g.getSurroundings(p0);
-//        std::stringstream ss0;
-//        for (int i = 0; i < 9; i++)
-//            ss0 << surr.array[i] << ' ';
-//
-//        pass = (ss0.str() == "4 4 4 4 5 6 4 1 6 ");
-//        if (! pass) std::cout << ss0.str() << std::endl;
-//
-//        // The surroundings of the strategic agent
-//        surr = g.getSurroundings(p1);
-//        std::stringstream ss1;
-//        for (int i = 0; i < 9; i++)
-//            ss1 << surr.array[i] << ' ';
-//
-//        pass = pass && (ss1.str() == "4 0 6 4 5 6 4 6 6 ");
-//        if (! pass) std::cout << ss1.str() << std::endl;
-//
-//    }
-//    ec.result(pass);
-//
-//    ec.DESC("4x5 grid, manual, surroundings of agents");
-//    pass = true;
-//    for (int i = 0; i < 10; i ++) {
-//        Game g(4, 5);                     // note: Game smoke test required first
-//
-////        std::cout << g << std::endl;
-//
-//        g.addSimple(0, 1); Position p0(0, 1);
-//        g.addAdvantage(1, 0);
-//        g.addAdvantage(1, 1);
-//        g.addFood(1, 3);
-//        g.addStrategic(2, 2); Position p1(2, 2);
-//        g.addFood(3, 1);
-//        g.addSimple(3, 2); Position p2(3, 2);
-//        g.addStrategic(4, 3); Position p3(4, 3);
-//
-//
-//        // The surroundings of the simple agent at p0
-//        Surroundings surr = g.getSurroundings(p0);
-//        std::stringstream ss0;
-//        for (int i = 0; i < 9; i++) ss0 << surr.array[i] << ' ';
-//
-//        pass = (ss0.str() == "4 4 4 6 5 6 3 3 6 ");
-//        if (! pass) std::cout << ss0.str() << std::endl;
-//
-//
-//        // The surroundings of the strategic agent at p1
-//        surr = g.getSurroundings(p1);
-//        std::stringstream ss1;
-//        for (int i = 0; i < 9; i++)
-//            ss1 << surr.array[i] << ' ';
-//
-//        pass = pass && (ss1.str() == "3 6 2 6 5 6 2 0 6 ");
-//        if (! pass) std::cout << ss1.str() << std::endl;
-//
-//
-//        // The surroundings of the simple agent at p2
-//        surr = g.getSurroundings(p2);
-//        std::stringstream ss2;
-//        for (int i = 0; i < 9; i++)
-//            ss2 << surr.array[i] << ' ';
-//
-//        pass = pass && (ss2.str() == "6 1 6 2 5 6 6 6 1 ");
-//        if (! pass) std::cout << ss2.str() << std::endl;
-//
-//
-//        // The surroundings of the strategic agent at p3
-//        surr = g.getSurroundings(p3);
-//        std::stringstream ss3;
-//        for (int i = 0; i < 9; i++)
-//            ss3 << surr.array[i] << ' ';
-//
-//        pass = pass && (ss3.str() == "0 6 4 6 5 4 4 4 4 ");
-//        if (! pass) std::cout << ss3.str() << std::endl;
-//    }
-//    ec.result(pass);
-//}
+void test_surroundings_smoketest(ErrorContext &ec) {
+    bool pass;
+
+    ec.DESC("--- Test - Surroundings - Smoketest ---");
+
+    ec.DESC("printing PieceTypes");
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        std::stringstream ss;
+        ss << PieceType::SIMPLE << ' '
+        << PieceType::STRATEGIC << ' '
+        << PieceType::FOOD << ' '
+        << PieceType::ADVANTAGE << ' '
+        << PieceType::INACCESSIBLE << ' '
+        << PieceType::SELF << ' '
+        << PieceType::EMPTY;
+
+        pass = (ss.str() == "0 1 2 3 4 5 6");
+//        if (! pass) std::cout << ss.str() << std::endl;
+    }
+    ec.result(pass);
+
+    ec.DESC("3x3 grid, manual, surroundings of agents");
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        Game g;                     // note: Game smoke test required first
+
+        Position p0(0, 0);
+        g.addSimple(p0);
+
+        Position p1(1, 0);
+        g.addStrategic(p1);
+
+        Position p2(2, 2);
+        g.addFood(p2);
+
+        Position p3(0, 2);
+        g.addAdvantage(p3);
+
+        // The surroundings of the simple agent
+        Surroundings surr = g.getSurroundings(p0);
+        std::stringstream ss0;
+        for (int i = 0; i < 9; i++)
+            ss0 << surr.array[i] << ' ';
+
+        pass = (ss0.str() == "4 4 4 4 5 6 4 1 6 ");
+        if (! pass) std::cout << ss0.str() << std::endl;
+
+        // The surroundings of the strategic agent
+        surr = g.getSurroundings(p1);
+        std::stringstream ss1;
+        for (int i = 0; i < 9; i++)
+            ss1 << surr.array[i] << ' ';
+
+        pass = pass && (ss1.str() == "4 0 6 4 5 6 4 6 6 ");
+        if (! pass) std::cout << ss1.str() << std::endl;
+
+    }
+    ec.result(pass);
+
+    ec.DESC("4x5 grid, manual, surroundings of agents");
+    pass = true;
+    for (int i = 0; i < 10; i ++) {
+        Game g(4, 5);                     // note: Game smoke test required first
+
+//        std::cout << g << std::endl;
+
+        g.addSimple(0, 1); Position p0(0, 1);
+        g.addAdvantage(1, 0);
+        g.addAdvantage(1, 1);
+        g.addFood(1, 3);
+        g.addStrategic(2, 2); Position p1(2, 2);
+        g.addFood(3, 1);
+        g.addSimple(3, 2); Position p2(3, 2);
+        g.addStrategic(4, 3); Position p3(4, 3);
+
+
+        // The surroundings of the simple agent at p0
+        Surroundings surr = g.getSurroundings(p0);
+        std::stringstream ss0;
+        for (int i = 0; i < 9; i++) ss0 << surr.array[i] << ' ';
+
+        pass = (ss0.str() == "4 4 4 6 5 6 3 3 6 ");
+        if (! pass) std::cout << ss0.str() << std::endl;
+
+
+        // The surroundings of the strategic agent at p1
+        surr = g.getSurroundings(p1);
+        std::stringstream ss1;
+        for (int i = 0; i < 9; i++)
+            ss1 << surr.array[i] << ' ';
+
+        pass = pass && (ss1.str() == "3 6 2 6 5 6 2 0 6 ");
+        if (! pass) std::cout << ss1.str() << std::endl;
+
+
+        // The surroundings of the simple agent at p2
+        surr = g.getSurroundings(p2);
+        std::stringstream ss2;
+        for (int i = 0; i < 9; i++)
+            ss2 << surr.array[i] << ' ';
+
+        pass = pass && (ss2.str() == "6 1 6 2 5 6 6 6 1 ");
+        if (! pass) std::cout << ss2.str() << std::endl;
+
+
+        // The surroundings of the strategic agent at p3
+        surr = g.getSurroundings(p3);
+        std::stringstream ss3;
+        for (int i = 0; i < 9; i++)
+            ss3 << surr.array[i] << ' ';
+
+        pass = pass && (ss3.str() == "0 6 4 6 5 4 4 4 4 ");
+        if (! pass) std::cout << ss3.str() << std::endl;
+    }
+    ec.result(pass);
+}
 //
 //
 //// - - - - - - - - - - A C T I O N - - - - - - - - - -

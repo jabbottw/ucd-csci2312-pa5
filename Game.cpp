@@ -62,7 +62,14 @@ namespace Gaming {
 
     // X = Rows, Y = Columns
     int xyToGridIndex(int x, int y, int m){
-        int i = (x*m) + y;
+        int i = 0;
+        if (x >= 0 and y >= 0){
+            i = (x*m) + y;
+        } else if (x < 0){
+            i = -1;
+        } else if (y < 0){
+            i = -1;
+        }
         return i;
     }
 
@@ -212,7 +219,7 @@ namespace Gaming {
     }
 
     bool Game::addStrategic(unsigned x, unsigned y, Strategy *s ){
-        if (x > MIN_HEIGHT or y > Game::MIN_WIDTH) {
+        if (x > __height or y > __width) {
             throw OutOfBoundsEx(Game::MIN_WIDTH, Game::MIN_HEIGHT, y, x);
         } else {
             int i = xyToGridIndex(x, y, this->__width);
@@ -276,9 +283,45 @@ namespace Gaming {
         }
     }
 
+    //enum PieceType { SIMPLE=0, STRATEGIC=1, FOOD=2, ADVANTAGE=3, INACCESSIBLE=4, SELF=5, EMPTY=6 };
+    PieceType getPieceEncoding(char x){
+        switch (x) {
+            case 'S': return PieceType(SIMPLE);
+            case 'T': return PieceType(STRATEGIC);
+            case 'F': return PieceType(FOOD);
+            case 'D': return PieceType(ADVANTAGE);
+            case 'I': return PieceType(INACCESSIBLE);
+            case 'X': return PieceType(SELF);
+            case 'E': return PieceType(EMPTY);
+            default: return PieceType(EMPTY);
+        }
+    }
+
     const Surroundings Game::getSurroundings(const Position &pos) const{
-        Surroundings s;
-        return s;
+        Surroundings surroundings;
+        int sIndex = 0;
+        int adjacentCellIndex = 0;
+        for (int i = -1; i <= 1; i++){
+            for (int j = -1; j <= 1; j++){
+                if (i == 0 && j == 0)
+                {
+                    surroundings.array[sIndex++] = PieceType(SELF);
+                } else {
+                    adjacentCellIndex = xyToGridIndex(pos.x + i, pos.y + j, this->__width);
+                    if (adjacentCellIndex < 0){
+                        surroundings.array[sIndex++] = PieceType(INACCESSIBLE);
+                    } else if (pos.x + i >= this->__height or pos.y + j >= this->__width){
+                        surroundings.array[sIndex++] = PieceType(INACCESSIBLE);
+                    } else if (__grid[adjacentCellIndex] == nullptr){
+                        surroundings.array[sIndex++] = PieceType(EMPTY);
+                    } else {
+                        PieceType p = getPieceEncoding(__grid[adjacentCellIndex]->getTypeID());
+                        surroundings.array[sIndex++] = p;
+                    }
+                }
+            }
+        }
+        return surroundings;
     }
 
     // Print as follows the state of the game after the last round:

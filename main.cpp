@@ -37,7 +37,7 @@ int main() {
 //    test_piece_interaction(ec, NumIters);
 
     // surroundings tests
-//    test_surroundings_smoketest(ec);
+    test_surroundings_smoketest(ec);
 //
 //    // action tests
 //    test_action_smoketest(ec);
