@@ -292,7 +292,7 @@ namespace Gaming {
     }
 
     //enum PieceType { SIMPLE=0, STRATEGIC=1, FOOD=2, ADVANTAGE=3, INACCESSIBLE=4, SELF=5, EMPTY=6 };
-    PieceType getPieceEncoding(char x){
+    PieceType Game::getPieceEncoding(char x){
         switch (x) {
             case 'S': return PieceType(SIMPLE);
             case 'T': return PieceType(STRATEGIC);
@@ -304,6 +304,65 @@ namespace Gaming {
             default: return PieceType(EMPTY);
         }
     }
+
+
+    ActionType Game::get_sIndexDirection(int i) {
+        //enum ActionType { N=0, NE, NW, E, W, SE, SW, S, STAY };
+        switch (i) {
+            case 0 :
+                return ActionType::NW;
+            case 1 :
+                return ActionType::N;
+            case 2 :
+                return ActionType::NE;
+            case 3 :
+                return ActionType::W;
+            case 4 :
+                return ActionType::STAY;
+            case 5 :
+                return ActionType::E;
+            case 6 :
+                return ActionType::SW;
+            case 7 :
+                return ActionType::S;
+            case 8 :
+                return ActionType::SE;
+            default:
+                return ActionType::STAY;
+        }
+    }
+
+    ActionType Game::findResource(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::ADVANTAGE) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::FOOD) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+    ActionType Game::findEmpty(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::EMPTY) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+
+
 
     const Surroundings Game::getSurroundings(const Position &pos) const{
         Surroundings surroundings;

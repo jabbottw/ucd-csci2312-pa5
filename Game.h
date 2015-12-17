@@ -103,6 +103,11 @@ namespace Gaming {
         // Status: Over!
         //
         friend std::ostream &operator<<(std::ostream &os, const Game &game);
+
+        static PieceType getPieceEncoding(char x);
+        static ActionType get_sIndexDirection(int i);
+        static ActionType findResource(const Surroundings &s);
+        static ActionType findEmpty(const Surroundings &s);
     };
 
 }

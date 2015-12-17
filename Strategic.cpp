@@ -6,6 +6,7 @@
 #include "Agent.h"
 #include "Strategy.h"
 #include "DefaultAgentStrategy.h"
+#include "Gaming.h"
 #include "Strategic.h"
 
 namespace Gaming {
@@ -26,11 +27,19 @@ namespace Gaming {
         os << STRATEGIC_ID << __id;
     }
 
-    ActionType Strategic::takeTurn(const Surroundings &s) const
-    {
-        ActionType action;
 
-        return action;
+
+
+    //enum PieceType { SIMPLE=0, STRATEGIC, FOOD, ADVANTAGE, INACCESSIBLE, SELF, EMPTY };
+    ActionType Strategic::takeTurn(const Surroundings &s) const {
+
+        if(Game::findResource(s) != ActionType::STAY){
+            return Game::findResource(s);
+        } else if (Game::findEmpty(s) != ActionType::STAY){
+            return Game::findEmpty(s);
+        } else {
+            return ActionType::STAY;
+        }
     }
 
 

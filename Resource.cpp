@@ -30,10 +30,9 @@ namespace Gaming {
         return 0;
     }
 
-
+    //enum PieceType { SIMPLE=0, STRATEGIC, FOOD, ADVANTAGE, INACCESSIBLE, SELF, EMPTY };
     ActionType Resource::takeTurn(const Surroundings &s) const {
-        ActionType a = N;
-        return a;
+        return ActionType::STAY;;
     }
 
     Piece &Resource::operator*(Piece &other)
