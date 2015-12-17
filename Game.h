@@ -108,6 +108,11 @@ namespace Gaming {
         static ActionType get_sIndexDirection(int i);
         static ActionType findResource(const Surroundings &s);
         static ActionType findEmpty(const Surroundings &s);
+        static ActionType findStrategic(const Surroundings &s);
+        static ActionType findAdvantage(const Surroundings &s);
+        static ActionType findFood(const Surroundings &s);
+        static ActionType findSimple(const Surroundings &s);
+        static ActionType findAgent(const Surroundings &s);
     };
 
 }

@@ -8,6 +8,7 @@
 #include "DefaultAgentStrategy.h"
 #include "Gaming.h"
 #include "Strategic.h"
+#include "AggressiveAgentStrategy.h"
 
 namespace Gaming {
     const char Strategic::STRATEGIC_ID = 'T';
@@ -32,14 +33,9 @@ namespace Gaming {
 
     //enum PieceType { SIMPLE=0, STRATEGIC, FOOD, ADVANTAGE, INACCESSIBLE, SELF, EMPTY };
     ActionType Strategic::takeTurn(const Surroundings &s) const {
+        ActionType a = __strategy->operator()(s);
+        return __strategy->operator()(s);
 
-        if(Game::findResource(s) != ActionType::STAY){
-            return Game::findResource(s);
-        } else if (Game::findEmpty(s) != ActionType::STAY){
-            return Game::findEmpty(s);
-        } else {
-            return ActionType::STAY;
-        }
     }
 
 

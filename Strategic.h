@@ -9,6 +9,7 @@
 #include "Agent.h"
 #include "Strategy.h"
 #include "DefaultAgentStrategy.h"
+#include "AggressiveAgentStrategy.h"
 
 namespace Gaming {
 

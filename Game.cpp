@@ -361,6 +361,60 @@ namespace Gaming {
         return ActionType::STAY;
     }
 
+    ActionType Game::findAgent(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::STRATEGIC or s.array[i] == PieceType::SIMPLE) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+    ActionType Game::findStrategic(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::STRATEGIC) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+    ActionType Game::findSimple(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::SIMPLE) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+    ActionType Game::findFood(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::FOOD) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
+
+    ActionType Game::findAdvantage(const Surroundings &s) {
+        for (int i = 0; i < 9; i++) {
+            if (i != 4) {
+                if (s.array[i] == PieceType::ADVANTAGE) {
+                    return get_sIndexDirection(i);
+                }
+            }
+        }
+        return ActionType::STAY;
+    }
 
 
 
